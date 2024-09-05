@@ -15,6 +15,12 @@
                     class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]">
             </label>
             <label>
+                <p class="text-lg">Kategori</p>
+                <select class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]" name="">
+                    <option value="">Pilih Kategori</option>
+                </select>
+            </label>
+            <label>
                 <p class="text-lg">Jenis Kelamin</p>
                 <select class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]" name="">
                     <option value="">Laki-Laki</option>

@@ -29,17 +29,7 @@
                 </div>
                 <h1 class="text-9xl">1</h1>
             </div>
-            <p class="py-4 px-10 text-3xl">Barang Masuk</p>
-        </l>
-        <a class="bg-[#1D1D1D] flex-grow h-80 flex overflow-hidden relative md:aspect-auto aspect-square flex-col cursor-pointer hover:scale-[1.025] duration-150 shadow-md shadow-white rounded-lg">
-            <div class="flex justify-around w-full flex-grow items-center">
-                <div class=" size-40">
-                    <img src="{{ asset('assets/barang-keluar.png') }}" class="size-full opacity-25 aspect-square"
-                        alt="Barang Keluar">
-                </div>
-                <h1 class="text-9xl">1</h1>
-            </div>
-            <p class="py-4 px-10 text-3xl">Barang Keluar</p>
+            <p class="py-4 px-10 text-3xl">Data Kategori</p>
         </a>
     </div>
     <div class="flex flex-wrap gap-2 mt-4"></div>

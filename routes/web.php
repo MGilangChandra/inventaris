@@ -46,4 +46,14 @@ Route::get('/item/edit', function () {
     return view('pages.barang.edit');
 });
 
+Route::get('/category', function () {
+    return view('pages.kategori.kategori');
+});
 
+Route::get('/category/edit', function () {
+    return view('pages.kategori.edit');
+});
+
+Route::get('/category/add', function () {
+    return view('pages.kategori.tambah');
+});

@@ -14,7 +14,7 @@
     @include('components.navbar')
     
     <main class=" px-3 md:px-7 flex items-center">
-        <div class="bg-white h-[calc(100vh-95px)] w-full rounded-[15px] p-4 overflow-y-auto scrollbar-none">
+        <div class="bg-white h-[calc(100vh-95px)] w-full rounded-[15px] p-2 overflow-y-auto scrollbar-none">
             @yield('body')
             
         </div>

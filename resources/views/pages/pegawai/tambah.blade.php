@@ -17,6 +17,13 @@
                     class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px] text-black">
             </label>
             <label class="flex flex-col w-full">
+                <span>Kategori</span>
+                <select name="kategori"
+                    class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px] text-black">
+                    <option value="">Pilih Kategori</option>
+                </select>
+            </label>
+            <label class="flex flex-col w-full">
                 <span>Jenis Kelamin</span>
                 <select name="jenis_kelamin"
                     class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px] text-black">
