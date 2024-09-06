@@ -1,8 +1,11 @@
 @extends('layouts.user')
 
 @section('body')
-    <div class="flex justify-between items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg my-4">
-        <h1 class="text-2xl font-semibold">Edit Kategori</h1>
+<div class="flex items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg my-4">
+    <a href="/category"
+        class="py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white"><box-icon
+            name='chevron-left' type="solid"></box-icon></a>
+    <h1 class="text-2xl font-semibold">Edit Kategori</h1>
     </div>
     <div class="flex justify-between items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg my-4">
         <form action="" class="w-full flex flex-col gap-4">

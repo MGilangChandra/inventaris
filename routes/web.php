@@ -57,3 +57,15 @@ Route::get('/category/edit', function () {
 Route::get('/category/add', function () {
     return view('pages.kategori.tambah');
 });
+
+Route::get('/items-in', function () {
+    return view('pages.barang-masuk.barang-masuk');
+});
+
+Route::get('/items-in/add', function () {
+    return view('pages.barang-masuk.tambah');
+});
+
+Route::get('/items-in/edit', function () {
+    return view('pages.barang-masuk.edit');
+});
