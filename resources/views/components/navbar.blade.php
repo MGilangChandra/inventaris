@@ -11,7 +11,7 @@
         <ul class="flex flex-col gap-2">
             <li><a href="/dashboard" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Dashboard</a></li>
             <li><a href="/staff" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Pegawai</a></li>
-            <li><a href="/item" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Barang</a></li>
+            <li><a href="{{ route('admin.barang.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Barang</a></li>
             <li><a href="/category" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Kategori</a></li>
             <li><a href="/items-in" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Barang Masuk</a></li>
         </ul>

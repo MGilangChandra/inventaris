@@ -34,18 +34,6 @@ Route::get('/staff/add', function () {
     return view('pages.pegawai.tambah');
 });
 
-Route::get('/item', function () {
-    return view('pages.barang.barang');
-});
-
-Route::get('/item/add', function () {
-    return view('pages.barang.tambah');
-});
-
-Route::get('/item/edit', function () {
-    return view('pages.barang.edit');
-});
-
 Route::get('/category', function () {
     return view('pages.kategori.kategori');
 });

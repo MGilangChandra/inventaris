@@ -1,0 +1,8 @@
+{
+    "Barang": true,
+    "BarangIn": true,
+    "BarangOut": true,
+    "Pegawai": true,
+    "KategoriBarang": true,
+    "Auth": true
+}

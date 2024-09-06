@@ -1,0 +1,11 @@
+{
+    "name": "BarangOut",
+    "alias": "barangout",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\BarangOut\\Providers\\BarangOutServiceProvider"
+    ],
+    "files": []
+}

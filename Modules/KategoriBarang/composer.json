@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/kategoribarang",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\KategoriBarang\\": "app/",
+            "Modules\\KategoriBarang\\Database\\Factories\\": "database/factories/",
+            "Modules\\KategoriBarang\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\KategoriBarang\\Tests\\": "tests/"
+        }
+    }
+}

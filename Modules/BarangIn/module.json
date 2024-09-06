@@ -1,0 +1,11 @@
+{
+    "name": "BarangIn",
+    "alias": "barangin",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\BarangIn\\Providers\\BarangInServiceProvider"
+    ],
+    "files": []
+}
