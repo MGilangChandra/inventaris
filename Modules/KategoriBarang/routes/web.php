@@ -14,6 +14,16 @@ use Modules\KategoriBarang\Http\Controllers\KategoriBarangController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('kategoribarang', KategoriBarangController::class)->names('kategoribarang');
+Route::prefix('admin')->group(function () {
+    Route::resource('kategori', KategoriBarangController::class, [
+        'names' => [
+            'index' => 'admin.kategori.list',
+            'show' => 'admin.kategori.show',
+            'store' => 'admin.kategori.store',
+            'create' => 'admin.kategori.create',
+            'edit' => 'admin.kategori.edit',
+            'update' => 'admin.kategori.update',
+            'destroy' => 'admin.kategori.destroy',
+        ],
+    ]);
 });

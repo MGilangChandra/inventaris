@@ -14,7 +14,7 @@ class KategoriBarangController extends Controller
      */
     public function index()
     {
-        return view('kategoribarang::index');
+        return view('kategoribarang::pages.kategori.index');
     }
 
     /**
@@ -22,13 +22,13 @@ class KategoriBarangController extends Controller
      */
     public function create()
     {
-        return view('kategoribarang::create');
+        return view('kategoribarang::pages.kategori.tambah');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         //
     }
@@ -46,13 +46,13 @@ class KategoriBarangController extends Controller
      */
     public function edit($id)
     {
-        return view('kategoribarang::edit');
+        return view('kategoribarang::pages.kategori.edit');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, $id)
     {
         //
     }

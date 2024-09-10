@@ -3,7 +3,7 @@
 @section('body')
     <div class="flex justify-between items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg">
         <h1 class="text-2xl font-semibold">Kategori</h1>
-        <a href="/category/add"
+        <a href="{{ route('admin.kategori.create') }}"
             class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white"><box-icon
                 name='plus'></box-icon></a>
     </div>
@@ -22,7 +22,7 @@
                 <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left">1 <span class="text-[#848484] md:hidden">(Barang di Kategori)</span></td>
                 <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left">1 <span class="text-[#848484] md:hidden">(Barang Tersedia)</span></td>
                 <td class="p-4 flex items-center justify-center gap-2">
-                    <a href="/category/edit" class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
+                    <a href="{{ route('admin.kategori.edit', 1) }}" class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
                     <a href="" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</a>
                 </td>
             </tr>
