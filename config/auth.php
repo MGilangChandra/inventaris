@@ -1,5 +1,7 @@
 <?php
 
+use Modules\Pegawai\Models\Pegawai;
+
 return [
 
     /*
@@ -40,6 +42,21 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'pegawai' => [
+            'driver' => 'session',
+            'provider' => 'pegawais',
+        ],
+
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ]
     ],
 
     /*
@@ -64,6 +81,16 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
+
+        'pegawais' => [
+            'driver' => 'eloquent',
+            'model' => Pegawai::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

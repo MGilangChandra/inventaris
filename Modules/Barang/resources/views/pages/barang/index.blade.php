@@ -28,19 +28,25 @@
                             class="text-[#848484] md:hidden">(Kategori)</span></td>
                     <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left">{{ $barang->jumlah }} <span
                             class="text-[#848484] md:hidden">(Barang di kategori)</span></td>
-                    <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left">{{ \Carbon\Carbon::parse($barang->created_at)->format('d-m-Y') }} <span
+                    <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left">
+                        {{ \Carbon\Carbon::parse($barang->created_at)->format('d-m-Y') }} <span
                             class="text-[#848484] md:hidden">(Tanggal Masuk)</span></td>
                     <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left capitalize">{{ $barang->status }} <span
                             class="text-[#848484] md:hidden">(Status)</span></td>
                     <td class="p-4 flex items-center justify-center gap-2">
                         <a href="{{ route('admin.barang.edit', $barang->id) }}"
                             class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
-                        <a href="" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</a>
+                        <form action="{{ route('admin.barang.destroy', $barang->id) }}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</button>
+                        </form>
                     </td>
                 </tr>
             @empty
                 <tr class="text-center odd:bg-[#4f4f4f] odd:text-[#FFF7FC]">
-                    <td colspan="7" class="p-3 md:p-14 text-xl max-[768px]:block max-[768px]:text-left">Tidak ada data</td>
+                    <td colspan="7" class="p-3 md:p-14 text-xl max-[768px]:block max-[768px]:text-left">Tidak ada data
+                    </td>
                 </tr>
             @endforelse
         </table>

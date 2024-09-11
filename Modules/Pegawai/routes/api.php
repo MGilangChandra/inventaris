@@ -13,7 +13,3 @@ use Modules\Pegawai\Http\Controllers\PegawaiController;
  * is assigned the "api" middleware group. Enjoy building your API!
  *
 */
-
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('pegawai', PegawaiController::class)->names('pegawai');
-});

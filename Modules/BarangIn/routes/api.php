@@ -13,7 +13,3 @@ use Modules\BarangIn\Http\Controllers\BarangInController;
  * is assigned the "api" middleware group. Enjoy building your API!
  *
 */
-
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('barangin', BarangInController::class)->names('barangin');
-});

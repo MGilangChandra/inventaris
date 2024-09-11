@@ -14,7 +14,7 @@ use Modules\KategoriBarang\Http\Controllers\KategoriBarangController;
 |
 */
 
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth:admin', 'auth.session'])->prefix('admin')->group(function () {
     Route::resource('kategori', KategoriBarangController::class, [
         'names' => [
             'index' => 'admin.kategori.list',
@@ -23,7 +23,17 @@ Route::prefix('admin')->group(function () {
             'create' => 'admin.kategori.create',
             'edit' => 'admin.kategori.edit',
             'update' => 'admin.kategori.update',
-            'destroy' => 'admin.kategori.destroy',
+            'destroy' => 'admin.kategori.delete',
         ],
+    ]);
+});
+
+Route::middleware(['auth:pegawai', 'auth.session'])->prefix('pegawai')->group(function () {
+    Route::resource('kategori', KategoriBarangController::class, [
+        'names' => [
+            'index' => 'pegawai.kategori.list',
+            'show' => 'pegawai.kategori.show',
+        ],
+        'only' => ['index', 'show'],
     ]);
 });

@@ -14,6 +14,12 @@ use Modules\BarangIn\Http\Controllers\BarangInController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('barangin', BarangInController::class)->names('barangin');
+Route::middleware(['auth:pegawai', 'auth.session'])->prefix('pegawai')->group(function () {
+    Route::resource('barang-in', BarangInController::class, [
+        'names' => [
+            'store' => 'pegawai.barang-in.store',
+            'create' => 'pegawai.barang-in.create',
+        ],
+        'only' => ['create', 'store'],
+    ]);
 });

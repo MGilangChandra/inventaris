@@ -6,62 +6,139 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a login page.
      */
     public function index()
     {
-        return view('auth::index');
+        return view('auth::admin-login', ['title' => 'Admin']);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a login page.
      */
-    public function create()
+    public function pegawaiIndex()
     {
-        return view('auth::create');
+        return view('auth::pegawai-login', ['title' => 'Pegawai']);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Handle an authentication attempt.
      */
-    public function store(Request $request): RedirectResponse
+    public function pegawaiLogin(Request $request): RedirectResponse
     {
-        //
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::guard('pegawai')->attempt($credentials)) {
+            $request->session()->regenerate();
+            flash()->success('Berhasil Masuk!');
+            return redirect()->intended('pegawai/');
+        } else {
+            flash()->warning('Username / Password Salah!');
+            return redirect()->intended('pegawai/login');
+        }
     }
 
     /**
-     * Show the specified resource.
+     * Log the user out of the application.
      */
-    public function show($id)
+    public function pegawaiLogout(Request $request): RedirectResponse
     {
-        return view('auth::show');
+        if (Auth::guard('pegawai')->check()) {
+            Auth::guard('pegawai')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            flash()->success('Berhasil Keluar!');
+        }
+
+        return redirect()->intended('pegawai/login');
+    }
+
+    public function pegawaiProfile()
+    {
+        $user = Auth::guard('pegawai')->user();
+
+        if ($user->avatar_url == null) {
+            $avatar = '';
+        } else {
+            $avatarPath = 'avatars/' . $user->avatar_url;
+            $user->avatar_url = $avatarPath;
+
+            $avatar = Storage::disk('public')->get($avatarPath);
+        }
+
+        return view('auth::profile.pegawai', [
+            'title' => 'Profile',
+            'akun' => $user,
+            'avatar' => $avatar
+        ]);
+    }
+
+    public function pegawaiDashboard()
+    {
+        return view('auth::pegawai-dashboard', ['title' => 'Dashboard']);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Handle an authentication attempt.
      */
-    public function edit($id)
+    public function login(Request $request): RedirectResponse
     {
-        return view('auth::edit');
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
+            flash()->success('Berhasil Masuk!');
+            return redirect()->intended('admin/');
+        } else {
+            flash()->warning('Username / Password Salah!');
+            return redirect()->intended('admin/login');
+        }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Log the user out of the application.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
-        //
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            flash()->success('Berhasil Keluar!');
+        }
+
+        return redirect()->intended('admin/login');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
+    public function adminProfile()
     {
-        //
+        $user = Auth::guard('admin')->user();
+
+        if ($user->avatar_url == null) {
+            $avatar = '';
+        } else {
+            $avatarPath = 'avatars/' . $user->avatar_url;
+            $user->avatar_url = $avatarPath;
+
+            $avatar = Storage::disk('public')->get($avatarPath);
+        }
+        return view('auth::profile.admin', ['title' => 'Profile', 'akun' => $user, 'avatar' => $avatar]);
+    }
+
+    public function adminDashboard()
+    {
+        return view('auth::admin-dashboard', ['title' => 'Dashboard']);
     }
 }

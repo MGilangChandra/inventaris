@@ -13,7 +13,3 @@ use Modules\BarangOut\Http\Controllers\BarangOutController;
  * is assigned the "api" middleware group. Enjoy building your API!
  *
 */
-
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('barangout', BarangOutController::class)->names('barangout');
-});

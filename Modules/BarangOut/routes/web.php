@@ -14,6 +14,12 @@ use Modules\BarangOut\Http\Controllers\BarangOutController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('barangout', BarangOutController::class)->names('barangout');
+Route::middleware(['auth:pegawai', 'auth.session'])->prefix('pegawai')->group(function () {
+    Route::resource('barang-out', BarangOutController::class, [
+        'names' => [
+            'store' => 'pegawai.barang-out.store',
+            'create' => 'pegawai.barang-out.create',
+        ],
+        'only' => ['create', 'store'],
+    ]);
 });

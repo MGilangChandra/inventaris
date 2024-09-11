@@ -14,7 +14,7 @@ use Modules\Barang\Http\Controllers\BarangController;
 |
 */
 
-Route::prefix('admin')->group(function () {
+Route::middleware(['auth:admin', 'auth.session'])->prefix('admin')->group(function () {
     Route::resource('barang', BarangController::class, [
         'names' => [
             'index' => 'admin.barang.list',
@@ -25,5 +25,15 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.barang.update',
             'destroy' => 'admin.barang.destroy',
         ],
+    ]);
+});
+
+Route::middleware(['auth:pegawai', 'auth.session'])->prefix('pegawai')->group(function () {
+    Route::resource('barang', BarangController::class, [
+        'names' => [
+            'index' => 'pegawai.barang.list',
+            'show' => 'pegawai.barang.show',
+        ],
+        'only' => ['index', 'show'],
     ]);
 });

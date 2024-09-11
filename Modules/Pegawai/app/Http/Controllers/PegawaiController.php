@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\Pegawai\Models\Pegawai;
 
 class PegawaiController extends Controller
 {
@@ -14,7 +15,12 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        return view('pegawai::index');
+        $pegawaisQuery = Pegawai::with('barangIn', 'barangOut')->latest();
+        $pegawais = $pegawaisQuery->paginate(10);
+        
+        return view('pegawai::index', [
+            'pegawais' => $pegawais
+        ]);
     }
 
     /**
@@ -22,7 +28,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        return view('pegawai::create');
+        return view('pegawai::tambah');
     }
 
     /**

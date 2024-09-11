@@ -8,10 +8,13 @@
     <h1 class="text-2xl font-semibold">Tambah Kategori</h1>
     </div>
     <div class="flex justify-between items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg my-4">
-        <form action="" class="w-full flex flex-col gap-4">
+        <form action="{{ route('admin.kategori.store') }}" method="POST" class="w-full flex flex-col gap-4">
+            @method('POST')
+            @csrf
+
             <label class="flex flex-col w-full">
                 <span>Nama Kategori</span>
-                <input type="text" name="nama_pegawai"
+                <input type="text" name="nama"
                     class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px] text-black">
             </label>
             <input type="button" value="Kirim"

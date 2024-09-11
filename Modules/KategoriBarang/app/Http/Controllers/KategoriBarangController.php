@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Modules\KategoriBarang\Models\KategoriBarang;
 
 class KategoriBarangController extends Controller
 {
@@ -14,7 +17,11 @@ class KategoriBarangController extends Controller
      */
     public function index()
     {
-        return view('kategoribarang::pages.kategori.index');
+        $kategorisQuery = KategoriBarang::with('barang')->latest();
+        $kategoris = $kategorisQuery->paginate(10);
+        return view('kategoribarang::index', [
+            'kategoris' => $kategoris
+        ]);
     }
 
     /**
@@ -22,7 +29,7 @@ class KategoriBarangController extends Controller
      */
     public function create()
     {
-        return view('kategoribarang::pages.kategori.tambah');
+        return view('kategoribarang::tambah');
     }
 
     /**
@@ -30,7 +37,42 @@ class KategoriBarangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string',
+        ], [
+            'nama.required' => 'Nama harus diisi',
+            'nama.string' => 'Nama harus berupa string',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+
+            foreach ($errors as $error) {
+                flash()->warning($error);
+            }
+
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $kategori = new KategoriBarang($request->only([
+                'nama',
+            ]));
+
+            $kategori->save();
+
+            DB::commit();
+
+            flash()->success('Kategori Berhasil Ditambah!');
+
+            return redirect()->route('admin.kategori.list');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            flash()->danger('Kategori Gagal Ditambah!');
+        }
     }
 
     /**
@@ -46,7 +88,7 @@ class KategoriBarangController extends Controller
      */
     public function edit($id)
     {
-        return view('kategoribarang::pages.kategori.edit');
+        return view('kategoribarang::edit');
     }
 
     /**

@@ -14,6 +14,16 @@ use Modules\Pegawai\Http\Controllers\PegawaiController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('pegawai', PegawaiController::class)->names('pegawai');
+Route::middleware(['auth:admin', 'auth.session'])->prefix('admin')->group(function () {
+    Route::resource('pegawai', PegawaiController::class, [
+        'names' => [
+            'index' => 'admin.pegawai.list',
+            'show' => 'admin.pegawai.show',
+            'store' => 'admin.pegawai.store',
+            'create' => 'admin.pegawai.create',
+            'edit' => 'admin.pegawai.edit',
+            'update' => 'admin.pegawai.update',
+            'destroy' => 'admin.pegawai.delete',
+        ],
+    ]);
 });

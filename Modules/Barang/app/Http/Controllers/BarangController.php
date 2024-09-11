@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Modules\Barang\Models\Barang;
 use Modules\KategoriBarang\Models\KategoriBarang;
@@ -73,7 +74,7 @@ class BarangController extends Controller
             $errors = $validator->errors()->all();
 
             foreach ($errors as $error) {
-                return redirect()->back()->withInput()->with('error', $error);
+                flash()->warning($error);;
             }
 
             return redirect()->back()->withInput();
@@ -115,11 +116,15 @@ class BarangController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.barang.list')->with('success', 'Barang baru ditambahkan');
+            flash()->success('Barang Berhasil Ditambah!');
+
+            return redirect()->route('admin.barang.list');
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->back()->withInput()->with('error', $e->getMessage());
+            flash()->danger('Barang Gagal Ditambah!');
+
+            return redirect()->back()->withInput();
         }
     }
 
@@ -152,6 +157,22 @@ class BarangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            Barang::destroy($id);
+
+            DB::commit();
+
+            flash()->success('Barang Berhasil Dihapus!');
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            flash()->danger('Barang Gagal Dihapus!');
+
+            return redirect()->back();
+        }
     }
 }
