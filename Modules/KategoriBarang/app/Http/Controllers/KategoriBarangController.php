@@ -88,7 +88,13 @@ class KategoriBarangController extends Controller
      */
     public function edit($id)
     {
-        return view('kategoribarang::edit');
+        $kategorie = KategoriBarang::findOrFail($id);
+
+        $barangsQuery = $kategorie->barang()->latest()->paginate(10, ['*'], 'barang');
+
+        return view('kategoribarang::edit', [
+            'kategori' => $kategorie,
+        ]);
     }
 
     /**
@@ -96,7 +102,39 @@ class KategoriBarangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string',
+        ], [
+            'nama.required' => 'Nama harus diisi',
+            'nama.string' => 'Nama harus berupa string',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+
+            foreach ($errors as $error) {
+                flash()->warning($error);
+            }
+
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $kategori = KategoriBarang::find($id);
+            $kategori->update($request->all());
+
+            DB::commit();
+
+            flash()->success('Kategori Berhasil Diupdate!');
+
+            return redirect()->route('admin.kategori.list');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            flash()->danger('Kategori Gagal Diupdate!');
+        }
     }
 
     /**
@@ -104,6 +142,22 @@ class KategoriBarangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            KategoriBarang::destroy($id);
+
+            DB::commit();
+
+            flash()->success('Barang Berhasil Dihapus!');
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            flash()->danger('Barang Gagal Dihapus!');
+
+            return redirect()->back();
+        }
     }
 }

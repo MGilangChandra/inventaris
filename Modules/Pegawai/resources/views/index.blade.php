@@ -3,7 +3,7 @@
 @section('body')
     <div class="flex justify-between items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg">
         <h1 class="text-2xl font-semibold">Pegawai</h1>
-        <a href="/staff/add"
+        <a href="{{ route('admin.pegawai.create') }}"
             class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white"><box-icon
                 name='plus'></box-icon></a>
     </div>
@@ -31,13 +31,13 @@
                     </td>
                     <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left">{{ $pegawai->jabatan }} <span
                             class="text-[#848484] md:hidden">(Jabatan)</span></td>
-                    <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left">{{ $pegawai->no_telp }} <span
+                    <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left">{{ $pegawai->no_hp }} <span
                             class="text-[#848484] md:hidden">(No Telp)</span></td>
                     <td class="p-4 flex items-center justify-center gap-2">
-                        <a href="{{ route('admin.pegawai.edit', $pegawai->id) }}"
+                        <a href="{{ route('admin.pegawai.edit', $pegawai->username) }}"
                             class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
                         <form action="{{ route('admin.pegawai.delete', $pegawai->id) }}" method="POST" class="w-full">
-                            @method('POST')
+                            @method('DELETE')
                             @csrf
                             <button type="submit" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</button>
                         </form>

@@ -14,9 +14,7 @@ return new class extends Migration
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('username');
-            $table->string('avatar_url')->nullable();
-            $table->string('email')->unique();
+            $table->string('username')->unique();
             $table->string('password');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->enum('jabatan', ['Pengurus Lab', 'Tata Usaha', 'Kepala Sekolah', 'Wakil Kepala Sekolah', 'Kepala Jurusan', 'Guru', 'Wali Kelas']);
