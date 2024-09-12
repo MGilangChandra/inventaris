@@ -3,7 +3,7 @@
         <box-icon name='menu' color='#ffffff' class="size-8" ></box-icon>
     </div>
     <a href="{{ route(Auth::guard('admin')->check() ? 'profile' : 'pegawai.profile') }}" class="flex gap-2 text-xl font-semibold">
-        <span class="text-white">{{ auth()->user()->nama }},</span>
+        <span class="text-white capitalize">{{ auth()->user()->username }},</span>
         <span class="text-[#848484]">{{ Auth::guard('admin') ? 'Admin' : auth()->user()->jabatan }}</span>
     </div>
     <aside :class="{'left-[12px] md:left-3': isOpen, '-left-full': !isOpen}" 
@@ -13,8 +13,8 @@
             @auth('admin')
             <li><a href="{{ route('admin.pegawai.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Pegawai</a></li>
             @endauth
-            <li><a href="{{ route('admin.barang.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Barang</a></li>
-            <li><a href="{{ route('admin.kategori.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Kategori</a></li>
+            <li><a href="{{ route(Auth::guard('admin')->check() ? 'admin.barang.list' : 'pegawai.barang.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Barang</a></li>
+            <li><a href="{{ route(Auth::guard('admin')->check() ? 'admin.kategori.list' : 'pegawai.kategori.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Kategori</a></li>
         </ul>
     </aside>
 </nav>
