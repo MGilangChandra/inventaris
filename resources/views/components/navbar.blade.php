@@ -10,11 +10,11 @@
             class="w-[calc(100%-24px)]  duration-500 ease-in-out fixed bg-[#414141] rounded-xl h-[calc(100vh-95px)] md:w-80 bottom-4 border-2 border-[#4f4f4f] pt-10 z-10">
         <ul class="flex flex-col gap-2">
             <li><a href="{{ route(Auth::guard('admin')->check() ? 'dashboard' : 'pegawai.dashboard') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Dashboard</a></li>
+            <li><a href="{{ route(Auth::guard('admin')->check() ? 'admin.kategori.list' : 'pegawai.kategori.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Kategori</a></li>
+            <li><a href="{{ route(Auth::guard('admin')->check() ? 'admin.barang.list' : 'pegawai.barang.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Barang</a></li>
             @auth('admin')
             <li><a href="{{ route('admin.pegawai.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Pegawai</a></li>
             @endauth
-            <li><a href="{{ route(Auth::guard('admin')->check() ? 'admin.barang.list' : 'pegawai.barang.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Barang</a></li>
-            <li><a href="{{ route(Auth::guard('admin')->check() ? 'admin.kategori.list' : 'pegawai.kategori.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Kategori</a></li>
         </ul>
     </aside>
 </nav>

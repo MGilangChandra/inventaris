@@ -8,39 +8,41 @@
                 <label>
                     <p class="text-lg">Nama</p>
                     <input type="text" name="nama"
-                        class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]" 
-                        x-bind:readonly="!isEditing"
+                        class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]"
+                        x-bind:disabled="!isEditing" :class="isEditing ? 'text-black' : 'text-gray-400 pointer-events-none'"
                         value="{{ Auth::user()->nama }}">
                 </label>
                 <label>
                     <p class="text-lg">Username</p>
                     <input type="text" name="nama"
-                        class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]" 
-                        x-bind:readonly="!isEditing"
+                        class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]"
+                        x-bind:disabled="!isEditing" :class="isEditing ? 'text-black' : 'text-gray-400 pointer-events-none'"
                         value="{{ Auth::user()->username }}">
                 </label>
                 <label>
                     <p class="text-lg">Email</p>
                     <input type="text" name="nama"
-                        class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]" 
-                        x-bind:readonly="!isEditing"
+                        class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]"
+                        x-bind:disabled="!isEditing" :class="isEditing ? 'text-black' : 'text-gray-400 pointer-events-none'"
                         value="{{ Auth::user()->email }}">
                 </label>
                 <label>
                     <p class="text-lg">Password</p>
                     <input type="text" name="nama"
-                        class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]" 
-                        x-bind:readonly="!isEditing">
+                        class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]"
+                        x-bind:disabled="!isEditing">
                 </label>
             </div>
             <div class="flex justify-end py-4 gap-4">
-                <button type="button" x-on:click="isEditing = !isEditing" 
-                        class="bg-[#4f4f4f] cursor-pointer px-4 py-2 flex items-center justify-center gap-2 rounded-[5px] font-medium text-white">
-                    <box-icon name='pencil' type='solid' color='#ffffff'></box-icon><span x-text="isEditing ? 'Batal' : 'Edit'"></span>
+                <button type="submit" x-show="isEditing"
+                    class="bg-green-700 cursor-pointer px-4 py-2 flex items-center justify-center gap-2 rounded-[5px] font-medium text-white">
+                    <box-icon name='save' type='solid' color='#ffffff'></box-icon>Save
                 </button>
 
-                <button type="submit" x-show="isEditing" class="bg-[#4f4f4f] cursor-pointer px-4 py-2 flex items-center justify-center gap-2 rounded-[5px] font-medium text-white">
-                    <box-icon name='save' type='solid' color='#ffffff'></box-icon>Save
+                <button type="button" x-on:click="isEditing = !isEditing"
+                    class="bg-[#4f4f4f] cursor-pointer px-4 py-2 flex items-center justify-center gap-2 rounded-[5px] font-medium text-white">
+                    <box-icon :name='isEditing ? "x" : "pencil"' :type='!isEditing ? "solid" : "regular"' color='#ffffff'></box-icon><span
+                        x-text="isEditing ? 'Batal' : 'Edit'"></span>
                 </button>
             </div>
         </form>

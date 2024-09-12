@@ -36,7 +36,7 @@
                     <td class="p-4 flex items-center justify-center gap-2">
                         <a href="{{ route('admin.pegawai.edit', $pegawai->username) }}"
                             class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
-                        <form action="{{ route('admin.pegawai.delete', $pegawai->id) }}" method="POST" class="w-full">
+                        <form action="{{ route('admin.pegawai.delete', $pegawai->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button type="submit" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</button>

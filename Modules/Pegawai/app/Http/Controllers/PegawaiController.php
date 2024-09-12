@@ -178,7 +178,7 @@ class PegawaiController extends Controller
 
             flash()->success('Pegawai berhasil diperbarui');
 
-            return redirect()->back();
+            return redirect()->route('admin.pegawai.list');
         } catch (\Exception $e) {
             DB::rollBack();
 
