@@ -21,7 +21,7 @@ Route::middleware(['guest:admin'])->group(function () {
 });
 
 Route::middleware(['auth:admin', 'auth.session'])->group(function () {
-    Route::get('admin/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('admin/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('admin', [AuthController::class, 'adminDashboard'])->name('dashboard');  
     Route::get('admin/profile', [AuthController::class, 'adminProfile'])->name('profile');  
 });
@@ -34,7 +34,7 @@ Route::middleware(['guest:pegawai'])->group(function () {
 });
 
 Route::middleware(['auth:pegawai', 'auth.session'])->group(function () {
-    Route::get('pegawai/logout', [AuthController::class, 'pegawaiLogout'])->name('pegawai.logout');
+    Route::post('pegawai/logout', [AuthController::class, 'pegawaiLogout'])->name('pegawai.logout');
     Route::get('pegawai', [AuthController::class, 'pegawaiDashboard'])->name('pegawai.dashboard');
     Route::get('pegawai/profile', [AuthController::class, 'pegawaiProfile'])->name('pegawai.profile');  
 });
