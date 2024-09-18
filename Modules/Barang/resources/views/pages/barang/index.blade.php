@@ -3,19 +3,19 @@
 @section('body')
     <div class="flex justify-between items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg">
         <h1 class="text-2xl font-semibold">Barang</h1>
-        <div class="justify-end flex gap-4">
+        <div class="justify-end flex gap-4 flex-wrap">
             @auth('admin')
                 <a href="{{ route('admin.barang.create') }}"
-                    class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white">Tambah<box-icon
+                    class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white"><box-icon
                         name='plus'></box-icon></a>
             @endauth
             @auth('pegawai')
                 <a href="{{ route('pegawai.barang-in.create') }}"
-                    class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white">Masukkan<box-icon
+                    class="bg-[#136921] gap-2 py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white"><box-icon
                         name='plus'></box-icon></a>
                 <a href="{{ route('pegawai.barang-out.create') }}"
-                    class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white">Keluarkan<box-icon
-                        name='plus'></box-icon></a>
+                    class="bg-[#7a1515] py-2 gap-2 px-2 text-white rounded-sm flex items-center justify-center fill-white"><box-icon
+                        name='minus'></box-icon></a>
             @endauth
         </div>
     </div>
@@ -47,14 +47,14 @@
                             class="text-[#848484] md:hidden">(Status)</span></td>
                     <td class="p-4 flex items-center justify-center gap-2">
                         <a href="{{ route(Auth::guard('admin')->check() ? 'admin.barang.show' : 'pegawai.barang.show', $barang->nama) }}"
-                            class="bg-[#136921] py-2 px-4 text-white rounded-sm">Lihat</a>
+                            class="bg-[#136921] py-2 px-4 text-white rounded-sm flex items-center justify-center"><box-icon class="size-6" name='show' type='solid' color='#ffffff' ></box-icon></a>
                         @auth('admin')
                             <a href="{{ route('admin.barang.edit', $barang->nama) }}"
-                                class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
+                                class="bg-[#696813] py-2 px-4 rounded-sm fill-white flex items-center"><box-icon class="size-6" name='edit-alt' type='solid' color='#ffffff' ></box-icon></a>
                             <form action="{{ route('admin.barang.destroy', $barang->id) }}" method="POST">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</button>
+                                <button type="submit" class="bg-[#921c15] py-2 px-4 flex items-center fill-white rounded-sm"><box-icon class="size-6" type='solid' name='eraser'></box-icon></button>
                             </form>
                         @endauth
                     </td>

@@ -259,4 +259,8 @@ class AuthController extends Controller
     {
         return view('auth::admin-dashboard', ['title' => 'Dashboard']);
     }
+
+    public function laporan() {
+        return view('auth::laporan', ['title' => 'Laporan']);
+    }
 }

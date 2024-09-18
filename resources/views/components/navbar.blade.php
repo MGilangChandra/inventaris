@@ -14,6 +14,7 @@
             <li><a href="{{ route(Auth::guard('admin')->check() ? 'admin.barang.list' : 'pegawai.barang.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Barang</a></li>
             @auth('admin')
             <li><a href="{{ route('admin.pegawai.list') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Data Pegawai</a></li>
+            <li><a href="{{ route('laporan') }}" class="flex items-center bg-[#1d1d1d50] h-12 px-4 text-xl font-semibold text-white hover:bg-[#1d1d1d75]">Laporan</a></li>
             @endauth
         </ul>
     </aside>

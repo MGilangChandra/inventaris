@@ -19,15 +19,15 @@
             <li><a href="#" class="duration-150 hover:opacity-50">Home</a></li>
             <li><a href="#" class="duration-150 hover:opacity-50">Profile</a></li>
             <li><a href="#" class="duration-150 hover:opacity-50">Kontak</a></li>
-            <li><a class="bg-[#C07F00] hover:bg-[#C03000] py-2 px-4 rounded-3xl flex items-center justify-center" href="{{ route('login') }}">Login</a>
+            <li><a class="bg-[#C07F00] hover:bg-[#614919] duration-150 py-2 px-4 rounded-3xl flex items-center justify-center" href="{{ route('login') }}">Login</a>
             </li>
         </ul>
     </nav>
-    <ul :class="{'': isOpen, '-right-full': !isOpen}" class="z-50 md:hidden flex flex-col fixed top-16 right-0 gap-4 bg-[#1d1d1d] w-full h-[calc(100vh-64px)] p-4 text-center text-2xl uppercase font-semibold ">
+    <ul :class="{'opacity-1': isOpen, 'opacity-0 pointer-events-none': !isOpen}" class="duration-150 z-50 md:hidden flex flex-col fixed top-16 right-0 gap-4 bg-[#1d1d1d] w-full h-[calc(100vh-64px)] p-4 text-center text-2xl uppercase font-semibold ">
         <li><a href="#" class="duration-150 hover:opacity-50">Home</a></li>
         <li><a href="#" class="duration-150 hover:opacity-50">Profile</a></li>
         <li><a href="#" class="duration-150 hover:opacity-50">Kontak</a></li>
-        <li><a class="bg-[#C07F00] hover:bg-[#C03000] py-2 px-4 rounded-3xl flex items-center justify-center" href="{{ route('login') }}">Login</a>
+        <li><a class="bg-[#C07F00] hover:bg-[#614919] py-2 px-4 duration-150 rounded-3xl flex items-center justify-center" href="{{ route('login') }}">Login</a>
         </li>
     </ul>
     {{-- Main Content --}}

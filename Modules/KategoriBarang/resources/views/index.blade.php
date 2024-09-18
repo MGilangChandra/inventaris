@@ -32,14 +32,14 @@
                             class="text-[#848484] md:hidden">(Barang Tersedia)</span></td>
                     <td class="p-4 flex items-center justify-center gap-2">
                         <a href="{{ route(Auth::guard('admin')->check() ? 'admin.kategori.show' : 'pegawai.kategori.show', $kategori->id) }}"
-                            class="bg-[#136921] py-2 px-4 text-white rounded-sm">Lihat</a>
+                            class="bg-[#136921] py-2 px-4 text-white rounded-sm flex items-center"><box-icon class="size-6" name='show' type='solid' color='#ffffff' ></box-icon></a>
                         @auth('admin')
                             <a href="{{ route('admin.kategori.edit', $kategori->id) }}"
-                                class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
+                                class="bg-[#696813] py-2 px-4 text-white rounded-sm flex items-center"><box-icon class="size-6" name='edit-alt' type='solid' color='#ffffff' ></box-icon></a>
                             <form action="{{ route('admin.kategori.delete', $kategori->id) }}" method="post">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</button>
+                                <button type="submit" class="bg-[#921c15] py-2 px-4 flex items-center rounded-sm fill-white"><box-icon class="size-6" type='solid' name='eraser'></box-icon></button>
                             </form>
                         @endauth
                     </td>

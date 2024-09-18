@@ -1,13 +1,13 @@
 @extends('layouts.user')
 
 @section('body')
-    <div class="flex items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg my-4">
+    <div class="flex items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg">
         <a href="{{ route('admin.barang.list') }}"
             class="py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white"><box-icon name='chevron-left'
                 type="solid"></box-icon></a>
         <h1 class="text-2xl font-semibold">Tambah Barang</h1>
     </div>
-    <div class="flex justify-between items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg my-4">
+    <div class="flex justify-between items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg my-3">
         <form action="{{ route('admin.barang.store') }}" method="post" class="w-full flex flex-col gap-4">
             @csrf
             @method('POST')
@@ -29,7 +29,7 @@
             <div x-data="imagePreview()" class="w-full">
                 <label class="flex flex-col w-full">
                     <span>Gambar Barang</span>
-                    <input type="file" name="gambar[]" multiple
+                    <input type="file" name="gambar" multiple
                         class="border-2 bg-white border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px] text-black"
                         @change="showPreview($event)">
                 </label>

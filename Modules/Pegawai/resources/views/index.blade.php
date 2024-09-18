@@ -35,11 +35,11 @@
                             class="text-[#848484] md:hidden">(No Telp)</span></td>
                     <td class="p-4 flex items-center justify-center gap-2">
                         <a href="{{ route('admin.pegawai.edit', $pegawai->username) }}"
-                            class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
+                            class="bg-[#696813] py-2 px-4 rounded-sm flex items-center"><box-icon class="size-6" name='edit-alt' type='solid' color='#ffffff' ></box-icon></a>
                         <form action="{{ route('admin.pegawai.delete', $pegawai->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</button>
+                            <button type="submit" class="bg-[#921c15] py-2 px-4 flex items-center fill-white rounded-sm"><box-icon class="size-6" type='solid' name='eraser'></box-icon></button>
                         </form>
                     </td>
                 </tr>
