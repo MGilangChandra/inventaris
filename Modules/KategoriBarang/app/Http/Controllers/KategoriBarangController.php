@@ -80,7 +80,11 @@ class KategoriBarangController extends Controller
      */
     public function show($id)
     {
-        return view('kategoribarang::show');
+        $kategorie = KategoriBarang::findOrFail($id);
+
+        return view('kategoribarang::lihat', [
+            'kategori' => $kategorie,
+        ]);
     }
 
     /**

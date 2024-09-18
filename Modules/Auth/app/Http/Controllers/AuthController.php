@@ -2,12 +2,17 @@
 
 namespace Modules\Auth\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Modules\Pegawai\Models\Pegawai;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -85,6 +90,119 @@ class AuthController extends Controller
     public function pegawaiDashboard()
     {
         return view('auth::pegawai-dashboard', ['title' => 'Dashboard']);
+    }
+
+    public function pegawaiEdit(Request $request, $id)
+    {
+        $messages = [
+            'username.required' => 'Username harus diisi',
+            'username.string' => 'Username harus berupa string',
+            'nama.required' => 'Nama harus diisi',
+            'nama.string' => 'Nama harus berupa string',
+            'jenis_kelamin.required' => 'Jenis kelamin harus diisi',
+            'jabatan.required' => 'Jabatan harus diisi',
+            'alamat.required' => 'Alamat harus diisi',
+            'alamat.string' => 'Alamat harus berupa string',
+            'no_hp.required' => 'No. HP harus diisi',
+            'no_hp.max' => 'No. HP maksimal 18 karakter',
+            'no_hp.unique' => 'No. HP sudah ada',
+            'no_hp.regex' => 'No. HP harus berupa angka',
+            'no_hp.min' => 'No. HP minimal 11 karakter',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'nullable|string|unique:pegawais,username,' . $id,
+            'nama' => 'required|string',
+            'password' => 'nullable|string',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'jabatan' => 'required|in:Pengurus Lab,Tata Usaha,Kepala Sekolah,Wakil Kepala Sekolah,Kepala Jurusan,Guru,Wali Kelas',
+            'alamat' => 'required|string|max:255|min:3',
+            'no_hp' => 'required|string|max:18|min:11|regex:/^[0-9]*$/|unique:pegawais,no_hp,' . $id,
+        ], $messages);
+
+        if ($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
+                flash()->warning($error);
+            }
+
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $pegawai = Pegawai::findOrFail($id);
+
+            $pegawai->fill($request->only('username', 'nama', 'jenis_kelamin', 'jabatan', 'alamat', 'no_hp'));
+
+            if ($request->filled('password')) {
+                $pegawai->password = Hash::make($request->password);
+            }
+
+            $pegawai->save();
+
+            DB::commit();
+
+            flash()->success('Pegawai berhasil diperbarui');
+
+            return redirect()->route('pegawai.dashboard');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            flash()->danger('Pegawai gagal diperbarui! ' . $e->getMessage());
+
+            return redirect()->back()->withInput();
+        }
+    }
+
+    public function adminEdit(Request $request, $id)
+    {
+        $messages = [
+            'username.required' => 'Username harus diisi',
+            'username.string' => 'Username harus berupa string',
+            'nama.required' => 'Nama harus diisi',
+            'nama.string' => 'Nama harus berupa string',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'nullable|string|unique:users,username,' . $id,
+            'nama' => 'required|string',
+            'password' => 'nullable|string',
+        ], $messages);
+
+        if ($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
+                flash()->warning($error);
+            }
+
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $user = User::findOrFail($id);
+
+            $user->fill($request->only('username', 'nama'));
+
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            $user->save();
+
+            DB::commit();
+
+            flash()->success('Admin berhasil diperbarui');
+
+            return redirect()->route('dashboard');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            flash()->danger('Admin gagal diperbarui! ' . $e->getMessage());
+
+            return redirect()->back()->withInput();
+        }
     }
 
     /**

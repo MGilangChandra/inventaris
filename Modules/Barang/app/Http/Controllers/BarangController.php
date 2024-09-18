@@ -53,9 +53,9 @@ class BarangController extends Controller
             'kategori_id.required' => 'Kategori harus dipilih',
             'kategori_id.exists' => 'Kategori tidak ditemukan',
             'deskripsi.required' => 'Deskripsi harus diisi',
-            'gambar*.image' => 'Gambar harus berupa gambar',
-            'gambar*.mimes' => 'Gambar harus berupa jpeg, png, jpg, gif, atau svg',
-            'gambar*.max' => 'Gambar maksimal 2 MB',
+            'gambar.*.image' => 'Gambar harus berupa gambar',
+            'gambar.*.mimes' => 'Gambar harus berupa jpeg, png, jpg, gif, webp atau svg',
+            'gambar.*.max' => 'Gambar maksimal 4 MB',
             'jumlah.required' => 'Jumlah harus diisi',
             'jumlah.integer' => 'Jumlah harus berupa angka',
             'jumlah.min' => 'Jumlah minimal 1',
@@ -67,7 +67,7 @@ class BarangController extends Controller
             'kategori_id' => 'required|exists:kategori_barangs,id',
             'jumlah' => 'required|integer',
             'deskripsi' => 'required|string',
-            'gambar.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
         ], $messages);
 
         if ($validator->fails()) {
@@ -98,18 +98,18 @@ class BarangController extends Controller
 
             // Menangani gambar
             if ($request->hasFile('gambar')) {
-                $image = $request->file('gambar');
-                // $imagePaths = [];
+                $images = $request->file('gambar');
+                $imagePaths = [];
 
-                // foreach ($images as $image) {
-                $imageName = $image->getClientOriginalName();
-                $imagePath = $image->storeAs('gambar/barang', $imageName, 'public');
-                //     $imagePaths[] = $imagePath;
-                // }
+                foreach ($images as $image) {
+                    $imageName = $image->getClientOriginalName();
+                    $imagePath = $image->storeAs('gambar/barang', $imageName, 'public');
+                    $imagePaths[] = $imagePath;
+                }
 
-                $barang->gambar = $imagePath;
+                // $barang->gambar = $imagePath;
 
-                // $barang->gambar = json_encode($imagePaths); // Simpan jalur gambar sebagai JSON
+                $barang->gambar = json_encode($imagePaths); // Simpan jalur gambar sebagai JSON
             }
 
             $barang->save();
@@ -131,17 +131,29 @@ class BarangController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function show($barang)
     {
-        return view('barang::pages.barang.lihat');
+        $barang = Barang::where('nama', $barang)->firstOrFail();
+        $kategoris = KategoriBarang::get();
+
+        return view('barang::pages.barang.lihat', [
+            'barang' => $barang,
+            'kategoris' => $kategoris,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($barang)
     {
-        return view('barang::pages.barang.admin.edit');
+        $barang = Barang::where('nama', $barang)->firstOrFail();
+        $kategoris = KategoriBarang::get();
+
+        return view('barang::pages.barang.admin.edit', [
+            'barang' => $barang,
+            'kategoris' => $kategoris
+        ]);
     }
 
     /**
@@ -149,7 +161,70 @@ class BarangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $messages = [
+            'nama.required' => 'Nama Barang harus diisi',
+            'nama.string' => 'Nama Barang harus berupa string',
+            'kategori_id.required' => 'Kategori harus dipilih',
+            'kategori_id.exists' => 'Kategori tidak ditemukan',
+            'deskripsi.required' => 'Deskripsi harus diisi',
+            'jumlah.required' => 'Jumlah harus diisi',
+            'jumlah.integer' => 'Jumlah harus berupa angka',
+            'jumlah.min' => 'Jumlah minimal 1',
+            'jumlah.max' => 'Jumlah maksimal 1000',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string',
+            'kategori_id' => 'required|exists:kategori_barangs,id',
+            'jumlah' => 'nullable|integer',
+            'deskripsi' => 'nullable|string',
+            'gambar.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ], $messages);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+
+            foreach ($errors as $error) {
+                flash()->warning($error);
+            }
+
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $barang = Barang::findOrFail($id);
+
+            $barang->status = $request->input('jumlah') > 0 ? 'tersedia' : 'habis';
+
+            if ($request->has('gambar')) {
+                $images = $request->file('gambar');
+                $imagePaths = [];
+
+                foreach ($images as $image) {
+                    $imageName = $image->getClientOriginalName();
+                    $imagePath = $image->storeAs('gambar/barang', $imageName, 'public');
+                    $imagePaths[] = $imagePath;
+                }
+
+                $barang->gambar = json_encode($imagePaths);
+            }
+
+            $barang->update($request->except('gambar'));
+
+            DB::commit();
+
+            flash()->success('Barang berhasil diperbarui');
+
+            return redirect()->route('admin.barang.list');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            flash()->danger('Barang gagal diperbarui: ' . $e->getMessage());
+
+            return redirect()->back()->withInput();
+        }
     }
 
     /**

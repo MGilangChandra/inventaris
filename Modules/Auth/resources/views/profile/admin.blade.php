@@ -3,32 +3,27 @@
 @section('body')
     <div x-data="{ isEditing: false }">
         <h1 class="text-2xl font-semibold">Profile</h1>
-        <form action="">
+        <form action="{{ route('profile.edit', $akun->id) }}" method="POST">
+            @method('PUT')
+            @csrf
             <div class="p-0 md:p-4 flex flex-col gap-4">
                 <label>
                     <p class="text-lg">Nama</p>
                     <input type="text" name="nama"
                         class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]"
                         x-bind:disabled="!isEditing" :class="isEditing ? 'text-black' : 'text-gray-400 pointer-events-none'"
-                        value="{{ Auth::user()->nama }}">
+                        value="{{ $akun->nama }}">
                 </label>
                 <label>
                     <p class="text-lg">Username</p>
-                    <input type="text" name="nama"
+                    <input type="text" name="username"
                         class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]"
                         x-bind:disabled="!isEditing" :class="isEditing ? 'text-black' : 'text-gray-400 pointer-events-none'"
-                        value="{{ Auth::user()->username }}">
-                </label>
-                <label>
-                    <p class="text-lg">Email</p>
-                    <input type="text" name="nama"
-                        class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]"
-                        x-bind:disabled="!isEditing" :class="isEditing ? 'text-black' : 'text-gray-400 pointer-events-none'"
-                        value="{{ Auth::user()->email }}">
+                        value="{{ $akun->username }}">
                 </label>
                 <label>
                     <p class="text-lg">Password</p>
-                    <input type="text" name="nama"
+                    <input type="text" name="password"
                         class="border-2 border-[#d1d1d1] md:px-4 p-2 w-full outline-none rounded-[5px]"
                         x-bind:disabled="!isEditing">
                 </label>

@@ -3,9 +3,21 @@
 @section('body')
     <div class="flex justify-between items-center text-white bg-[#414141] p-2 md:p-4 rounded-lg">
         <h1 class="text-2xl font-semibold">Barang</h1>
-        <a href="{{ route('admin.barang.create') }}"
-            class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white"><box-icon
-                name='plus'></box-icon></a>
+        <div class="justify-end flex gap-4">
+            @auth('admin')
+                <a href="{{ route('admin.barang.create') }}"
+                    class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white">Tambah<box-icon
+                        name='plus'></box-icon></a>
+            @endauth
+            @auth('pegawai')
+                <a href="{{ route('pegawai.barang-in.create') }}"
+                    class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white">Masukkan<box-icon
+                        name='plus'></box-icon></a>
+                <a href="{{ route('pegawai.barang-out.create') }}"
+                    class="bg-[#136921] py-2 px-2 text-white rounded-sm flex items-center justify-center fill-white">Keluarkan<box-icon
+                        name='plus'></box-icon></a>
+            @endauth
+        </div>
     </div>
     <div class="w-full overflow-auto my-3 bg-[#414141] p-2 rounded-lg scrollbar-none">
         <table class="border-2 w-full border-collapse bg-white">
@@ -34,13 +46,17 @@
                     <td class="p-3 md:p-2 max-[768px]:block max-[768px]:text-left capitalize">{{ $barang->status }} <span
                             class="text-[#848484] md:hidden">(Status)</span></td>
                     <td class="p-4 flex items-center justify-center gap-2">
-                        <a href="{{ route('admin.barang.edit', $barang->id) }}"
-                            class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
-                        <form action="{{ route('admin.barang.destroy', $barang->id) }}" method="POST">
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</button>
-                        </form>
+                        <a href="{{ route(Auth::guard('admin')->check() ? 'admin.barang.show' : 'pegawai.barang.show', $barang->nama) }}"
+                            class="bg-[#136921] py-2 px-4 text-white rounded-sm">Lihat</a>
+                        @auth('admin')
+                            <a href="{{ route('admin.barang.edit', $barang->nama) }}"
+                                class="bg-[#136921] py-2 px-4 text-white rounded-sm">Edit</a>
+                            <form action="{{ route('admin.barang.destroy', $barang->id) }}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="bg-[#921c15] py-2 px-4 text-white rounded-sm">Hapus</button>
+                            </form>
+                        @endauth
                     </td>
                 </tr>
             @empty

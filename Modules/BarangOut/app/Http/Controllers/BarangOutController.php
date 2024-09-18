@@ -2,10 +2,15 @@
 
 namespace Modules\BarangOut\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\Barang\Models\Barang;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Modules\BarangOut\Models\BarangOut;
+use Illuminate\Support\Facades\Validator;
 
 class BarangOutController extends Controller
 {
@@ -22,15 +27,71 @@ class BarangOutController extends Controller
      */
     public function create()
     {
-        return view('barangout::create');
+        $barangs = Barang::get();
+        $barangOut = BarangOut::with('barang')->where('pegawai_id', Auth::user()->id)->latest()->paginate(10);
+        
+        return view('barangout::tambah', [
+            'barangs' => $barangs,
+            'barangOut' => $barangOut,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        //
+        $messages = [
+            'barang_id.required' => 'Barang harus dipilih',
+            'jumlah.required' => 'Jumlah harus diisi',
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'barang_id' => 'required|exists:barangs,id',
+            'jumlah' => 'required|integer',
+        ], $messages);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+
+            foreach ($errors as $error) {
+                flash()->warning($error);
+            }
+
+            return redirect()->back()->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $barangOut = new BarangOut($request->only([
+                'barang_id',
+                'jumlah'
+            ]));
+
+            $barangOut->pegawai_id = Auth::user()->id;
+
+            $barang = $barangOut->barang;
+            $barang->decrementJumlah($barangOut->jumlah);
+
+            if ($barang->jumlah <= 0) {
+                $barang->status = 'habis';
+                $barang->save();
+            }
+
+            $barangOut->save();
+            DB::commit();
+
+            flash()->success('Barang dikeluarkan');
+
+            return redirect()->route('pegawai.barang.list');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            flash()->danger('Barang gagal dikeluarkan: ' . $e->getMessage());
+
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -52,7 +113,7 @@ class BarangOutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, $id)
     {
         //
     }

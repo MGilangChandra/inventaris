@@ -4,7 +4,7 @@
     </div>
     <a href="{{ route(Auth::guard('admin')->check() ? 'profile' : 'pegawai.profile') }}" class="flex gap-2 text-xl font-semibold">
         <span class="text-white capitalize">{{ auth()->user()->username }},</span>
-        <span class="text-[#848484]">{{ Auth::guard('admin') ? 'Admin' : auth()->user()->jabatan }}</span>
+        <span class="text-[#848484]">{{ Auth::guard('admin')->check() ? 'Admin' : auth()->user()->jabatan }}</span>
     </div>
     <aside :class="{'left-[12px] md:left-3': isOpen, '-left-full': !isOpen}" 
             class="w-[calc(100%-24px)]  duration-500 ease-in-out fixed bg-[#414141] rounded-xl h-[calc(100vh-95px)] md:w-80 bottom-4 border-2 border-[#4f4f4f] pt-10 z-10">
